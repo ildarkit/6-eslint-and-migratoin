@@ -5,6 +5,7 @@ import {
   boardDepsContext,
   boardStoreContext,
   useBoardStoreFactory,
+  boardActionDepsContext,
 } from "@/features/dnd-board";
 import {
   updateTaskModalDeps,
@@ -73,5 +74,24 @@ export function BoardStoreProvider({
     <boardStoreContext.Provider value={boardStore}>
       {children}
     </boardStoreContext.Provider>
+  );
+}
+
+export function BoardActionsProvider({
+  children,
+  board,
+}: {
+  children?: React.ReactNode;
+  board: BoardType;
+}) {
+  return (
+    <boardActionDepsContext.Provider
+      value={{
+        canUpdateEditorsBoard: (userId) =>
+          board.ownerId === userId,
+      }}
+    >
+      {children}
+    </boardActionDepsContext.Provider>
   );
 }
