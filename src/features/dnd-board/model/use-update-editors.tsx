@@ -10,9 +10,10 @@ export function useUpdateEditorsBoard(board?: BoardPartial) {
   const updateEditorsBoard = async (data: UpdateBoardData, onUpdate: () => void) => {
     if (!board || !canUpdateEditorsBoard(ownerId)) return;
 
-    await updateBoardRaw(board.id, data);
-
-    onUpdate();
+    if (board.editorsIds !== data.editorsIds) {
+      await updateBoardRaw(board.id, data);
+      onUpdate();
+    }
   };
 
   return { updateEditorsBoard };

@@ -2,7 +2,7 @@ import { UiModal } from "@/shared/ui/ui-modal";
 import { UiButton } from "@/shared/ui/ui-button";
 import { Controller, useForm } from "react-hook-form";
 import { useUpdateEditorsBoard } from "../../model/use-update-editors";
-import { Board, UpdateBoardData } from "@/entities/board";
+import { BoardPartial, UpdateBoardData } from "@/entities/board";
 import { UserMultiSelect } from "@/entities/user";
 
 export function UpdateBoardEditorsModal({
@@ -10,7 +10,7 @@ export function UpdateBoardEditorsModal({
   board,
 }: {
   onClose: () => void;
-  board: Board;
+  board: BoardPartial;
 }) {
   const { control, handleSubmit } = useForm<UpdateBoardData>({
     defaultValues: board,

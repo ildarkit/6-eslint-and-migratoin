@@ -1,5 +1,5 @@
 import { AvatarsList, useUsers } from "@/entities/user";
-import { Board, useBoards } from "@/entities/board";
+import { Board, BoardPartial, useBoards } from "@/entities/board";
 import { useBoardActionDeps } from "../../deps";
 import { UpdateBoardEditorsButton } from "../board/update-editors-button";
 import { Session } from "@/entities/session";
@@ -14,12 +14,12 @@ export function BoardEditors({
 }) {
   const users = useUsers((s) => s.usersMap());
   const { canUpdateEditorsBoard } = useBoardActionDeps();
-  const [ editors, setEditors ] = useState(board.editorsIds);
+  const [ editorsBoard, setEditorsBoard ] = useState<BoardPartial>(board);
   const getBoardById = useBoards((s) => s.getBoardById);
 
   const handleClick = () => {
     const updatedBoard = getBoardById(board.id);
-    setEditors(updatedBoard?.editorsIds ?? []);
+    setEditorsBoard(updatedBoard!);
   };
 
   return (
@@ -34,13 +34,13 @@ export function BoardEditors({
           <tr key={board.id} className="px-5 py-2 ">
             <td className="p-2">
               <AvatarsList
-                avatarsIds={editors.map((id) => users[id].avatarId)}
+                avatarsIds={editorsBoard.editorsIds.map((id) => users[id].avatarId)}
               />
             </td>
             {canUpdateEditorsBoard(session.userId) && ( 
               <td className="p-2">
                 <div className="flex gap-2 ml-auto">
-                  <UpdateBoardEditorsButton board={board} onClick={handleClick}/>
+                  <UpdateBoardEditorsButton board={editorsBoard} onClick={handleClick}/>
                 </div>
               </td>
             )}

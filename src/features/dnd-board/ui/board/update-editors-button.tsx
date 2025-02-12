@@ -2,7 +2,7 @@ import { UpdateIcon } from "@/shared/ui/ui-icons";
 import clsx from "clsx";
 import { useState } from "react";
 import { UpdateBoardEditorsModal } from "../modals/update-editors-modal";
-import { Board } from "@/entities/board";
+import { BoardPartial } from "@/entities/board";
 
 export function UpdateBoardEditorsButton({
   className,
@@ -10,7 +10,7 @@ export function UpdateBoardEditorsButton({
   onClick,
 }: {
   className?: string;
-  board: Board;
+  board: BoardPartial;
   onClick: () => void;
 }) {
   const [open, setOpen] = useState(false);
