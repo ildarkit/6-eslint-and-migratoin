@@ -7,11 +7,17 @@ import { Board } from "@/entities/board";
 export function UpdateBoardEditorsButton({
   className,
   board,
+  onClick,
 }: {
   className?: string;
   board: Board;
+  onClick: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  const onClose = () => {
+    setOpen(false);
+    onClick();
+  };
 
   return (
     <>
@@ -19,7 +25,7 @@ export function UpdateBoardEditorsButton({
         <UpdateIcon className="w-8 h-8 text-teal-600" />
       </button>
       {open && (
-        <UpdateBoardEditorsModal board={board} onClose={() => setOpen(false)} />
+        <UpdateBoardEditorsModal board={board} onClose={onClose} />
       )}
     </>
   );

@@ -1,8 +1,9 @@
 import { AvatarsList, useUsers } from "@/entities/user";
-import { Board } from "@/entities/board";
+import { Board, useBoards } from "@/entities/board";
 import { useBoardActionDeps } from "../../deps";
 import { UpdateBoardEditorsButton } from "../board/update-editors-button";
 import { Session } from "@/entities/session";
+import { useState } from "react";
 
 export function BoardEditors({ 
   session,
@@ -13,6 +14,13 @@ export function BoardEditors({
 }) {
   const users = useUsers((s) => s.usersMap());
   const { canUpdateEditorsBoard } = useBoardActionDeps();
+  const [ editors, setEditors ] = useState(board.editorsIds);
+  const getBoardById = useBoards((s) => s.getBoardById);
+
+  const handleClick = () => {
+    const updatedBoard = getBoardById(board.id);
+    setEditors(updatedBoard?.editorsIds ?? []);
+  };
 
   return (
     <div>
@@ -26,13 +34,13 @@ export function BoardEditors({
           <tr key={board.id} className="px-5 py-2 ">
             <td className="p-2">
               <AvatarsList
-                avatarsIds={board.editorsIds.map((id) => users[id].avatarId)}
+                avatarsIds={editors.map((id) => users[id].avatarId)}
               />
             </td>
             {canUpdateEditorsBoard(session.userId) && ( 
               <td className="p-2">
                 <div className="flex gap-2 ml-auto">
-                  <UpdateBoardEditorsButton board={board}/>
+                  <UpdateBoardEditorsButton board={board} onClick={handleClick}/>
                 </div>
               </td>
             )}
