@@ -1,6 +1,8 @@
 export { BoardActions } from "./ui/board-actions";
 export { Board } from "./ui/board/board";
 export { BoardEditors } from "./ui/board/board-editors";
+export { BoardSearch } from "./ui/board-search";
+export { BoardSearchProvider } from "./model/board-search.store";
 export {
   useBoardStoreFactory,
   boardStoreContext,

@@ -9,6 +9,7 @@ import {
   TaskEditorProvider,
   BoardActionsProvider,
 } from "./providers";
+import { BoardSearch, BoardSearchProvider } from "@/features/dnd-board";
 
 export function BoardPage() {
   const params = useParams<"boardId">();
@@ -31,9 +32,11 @@ export function BoardPage() {
       <BoardDepsProvider sesson={sesson} />
       <BoardStoreProvider board={board} />
       <BoardActionsProvider board={board} />
+      <BoardSearchProvider />
       <div className="flex flex-col py-3 px-4 grow">
         <h1 className="text-3xl mb-4 shrink-0 ">{board?.title}</h1>
         <BoardActions className="shrink-0 mb-2">
+          <BoardSearch className="w=[250x]" />
           <BoardEditors session={sesson} board={board} />
         </BoardActions>
         <Board className="basis-0 grow" />
